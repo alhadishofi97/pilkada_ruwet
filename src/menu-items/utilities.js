@@ -16,10 +16,10 @@ const utilities = {
   type: 'group',
   children: [
     {
-      id: 'util-group',
-      title: 'Group',
+      id: 'util-dashboard',
+      title: 'Dashboard',
       type: 'item',
-      url: '/utils/util-group',
+      url: '/dashboard/default',
       icon: icons.IconTypography,
       breadcrumbs: false
     },
@@ -30,45 +30,46 @@ const utilities = {
       url: '/utils/util-user',
       icon: icons.IconPalette,
       breadcrumbs: false
-    },
-    {
-      id: 'util-customer',
-      title: 'Customer',
-      type: 'item',
-      url: '/utils/util-customer',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    },
-    {
-      id: 'util-barang',
-      title: 'Barang',
-      type: 'item',
-      url: '/utils/util-barang',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    },
-    {
-      id: 'util-supplier',
-      title: 'Supplier',
-      type: 'item',
-      url: '/utils/util-supplier',
-      icon: icons.IconShadow,
-      breadcrumbs: false
-    }, 
-    {
-      id: 'util-manageSupplier',
-      title: 'Manage Supplier',
-      type: 'item',
-      url: '/utils/util-manageSupplier',
-      icon: icons.IconWindmill,
-      breadcrumbs: false
-    },
-    {
-      id: 'util-pembelianStock',
-      title: 'Pembelian Stock',
-      type: 'item',
-      url: '/utils/util-pembelianStock',
     }
+    // ,
+    // {
+    //   id: 'util-customer',
+    //   title: 'Customer',
+    //   type: 'item',
+    //   url: '/utils/util-customer',
+    //   icon: icons.IconShadow,
+    //   breadcrumbs: false
+    // } ,
+    // {
+    //   id: 'util-barang',
+    //   title: 'Barang',
+    //   type: 'item',
+    //   url: '/utils/util-barang',
+    //   icon: icons.IconShadow,
+    //   breadcrumbs: false
+    // },
+    // {
+    //   id: 'util-supplier',
+    //   title: 'Supplier',
+    //   type: 'item',
+    //   url: '/utils/util-supplier',
+    //   icon: icons.IconShadow,
+    //   breadcrumbs: false
+    // },
+    // {
+    //   id: 'util-manageSupplier',
+    //   title: 'Manage Supplier',
+    //   type: 'item',
+    //   url: '/utils/util-manageSupplier',
+    //   icon: icons.IconWindmill,
+    //   breadcrumbs: false
+    // },
+    // {
+    //   id: 'util-pembelianStock',
+    //   title: 'Pembelian Stock',
+    //   type: 'item',
+    //   url: '/utils/util-pembelianStock',
+    // }
   ]
 };
 

@@ -9,6 +9,8 @@ const menuItems = {
   items: [dashboard, pages, utilities, other]
 };
 
+
+
 // const allowedMenus = ['dashboard', 'default', 'pages', 'authentication', 'register3'];
 // localStorage.setItem('menu-items', JSON.stringify(allowedMenus));
 

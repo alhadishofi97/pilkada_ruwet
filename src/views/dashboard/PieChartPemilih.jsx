@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Card, CardContent } from '@mui/material';
-import { PieChart, Pie, Tooltip, Cell, Label, Legend } from 'recharts';
+import { PieChart, Pie, Tooltip, Cell, Label } from 'recharts';
 
 const PieChartPemilih = () => {
   const token = localStorage.getItem('token');
@@ -66,14 +66,12 @@ const PieChartPemilih = () => {
                 cy="50%"
                 outerRadius={150}
                 fill="#8884d8"
-                label={({ name, count }) => `${name}: ${count}`}
               >
                 {desaItem.data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(value, name) => [`${name} : ${value}`, 'TPS']} />
-              <Legend />
             </PieChart>
           </Box>
         ))}
