@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Card, CardContent } from '@mui/material';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Unstable_Grid2';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from 'recharts';
 
 const PieChartPemilih = () => {
@@ -51,7 +51,7 @@ const PieChartPemilih = () => {
 
     <Grid container spacing={2}>
       {desaData.map((desaItem, index) => (
-        <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={index}>
+        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 3 }} key={index}>
           <Card>
             <CardContent>
               <Typography variant="h6" component="div" gutterBottom>
