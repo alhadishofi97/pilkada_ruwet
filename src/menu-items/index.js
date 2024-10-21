@@ -14,6 +14,7 @@ const menuItems = {
 // const allowedMenus = ['dashboard', 'default', 'pages', 'authentication', 'register3'];
 // localStorage.setItem('menu-items', JSON.stringify(allowedMenus));
 
+
 const storedAllowedMenus = localStorage.getItem('menu-items');
 let allowedMenus = [];
 if (storedAllowedMenus && storedAllowedMenus.length > 2) {
