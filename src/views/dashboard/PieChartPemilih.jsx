@@ -47,42 +47,40 @@ const PieChartPemilih = () => {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-    <Container maxWidth="xl"> {/* Pastikan kontainer lebih lebar */}
-      <Typography variant="h4" component="h1" gutterBottom>
-        Dashboard
-      </Typography>
-      <Box display="flex" justifyContent="space-between" alignItems="flex-start" flexDirection="row" flexWrap="nowrap">
-        {desaData.map((desaItem, index) => (
-          <Box key={index} display="flex" flexDirection="column" alignItems="center" width="400px" mb={4} mx={2}>
-            <Typography variant="h5" component="h2" gutterBottom>
-              Desa: {desaItem.desa}
-            </Typography>
-            <PieChart width={400} height={400}>
-              <Pie
-                data={desaItem.data}
-                dataKey="count"
-                nameKey="tps"
-                cx="50%"
-                cy="50%"
-                outerRadius={150}
-                fill="#8884d8"
-              >
-                {desaItem.data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value, name) => [`${name} : ${value}`, 'TPS']} />
-            </PieChart>
-          </Box>
-        ))}
-      </Box>
-      <Card>
-        <CardContent>
-          <Typography variant="h5">Total Kader</Typography>
-          <Typography variant="h2">{kaderCount}</Typography>
-        </CardContent>
-      </Card>
-    </Container>
+
+    <Grid container spacing={2}>
+      {desaData.map((desaItem, index) => (
+        <Grid item xs={12} sm={6} md={3} lg={3} xl={3} key={index}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" component="div" gutterBottom>
+                Desa: {desaItem.desa}
+              </Typography>
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie
+                    data={desaItem.data}
+                    dataKey="count"
+                    nameKey="tps"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={40}
+                    outerRadius={60}
+                    fill="#8884d8"
+                  >
+                    {desaItem.data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+
+                  <Tooltip formatter={(value, name) => [`${name} : ${value}`, 'TPS']} />
+                </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 
