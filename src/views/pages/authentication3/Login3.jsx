@@ -19,10 +19,10 @@ import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
+import axios from 'axios';
 
 // Mocking the login API response for this example
-const loginApiUrl = import.meta.env.VITE_APP_API_URL + '/api/admin/login'; // Update API URL untuk admin
-console.log('loginApiUrl', loginApiUrl)
+const BASE_URL = import.meta.env.VITE_APP_API_URL; // Update API URL untuk admin
 
 
 export const Login = () => {
@@ -50,31 +50,38 @@ export const Login = () => {
     onSubmit: async (values) => {
       const loginData = { email: values.username, password: values.password }; // Change username to email
 
-      localStorage.setItem('IS_LOGIN', 1);
 
-      navigate(0);
+      let data = JSON.stringify(loginData);
 
-      try {
-        const response = await fetch(loginApiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(loginData),
-          withCredentials: true,
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: BASE_URL + '/api/user/login',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          response = response.data;
+          if (response.success) {
+            localStorage.setItem('IS_LOGIN', 1);
+            localStorage.setItem('DESA', response.data.desa);
+            localStorage.setItem('KECAMATAN', response.data.kecamatan);
+            localStorage.setItem('LEVEL', response.data.level);
+            navigate(0);
+          } else {
+            setError(response.message || 'Login failed, please try again.');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
         });
 
-        const data = await response.json();
 
-        if (response.ok && data.access_token) { // Check for access_token
-          localStorage.setItem('token', data.access_token); // Store access_token
-          localStorage.setItem('user', loginData.email); // Store email instead of username
-          // Tambahkan penyimpanan data tambahan jika diperlukan untuk role admin
-          navigate(0);  // Adjust the route as needed
-        } else {
-          setError(data.message || 'Login failed, please try again.');
-        }
-      } catch (error) {
-        setError('An error occurred while logging in.');
-      }
+
     }
   })
 

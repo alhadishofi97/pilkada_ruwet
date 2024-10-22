@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Card, CardContent, Grid } from '@mui/material';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
 
+const BASE_URL = import.meta.env.VITE_APP_API_URL; // Update API URL untuk admin
 
 const PieChartPemilih = () => {
   const token = localStorage.getItem('token');
@@ -11,8 +12,15 @@ const PieChartPemilih = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      let level = localStorage.getItem('LEVEL');
+      let url = '';
+      if (level.toUpperCase() == 'KECAMATAN') {
+        url = BASE_URL + '/api/data-charts-by-kecamatan/' + localStorage.getItem('KECAMATAN');
+      } else {
+        url = BASE_URL + '/api/data-charts-by-desa/' + localStorage.getItem('DESA');
+      }
       try {
-        const response = await fetch('https://blangkon1.com/api/data-induks', {
+        const response = await fetch(url, {
           method: 'GET',
         });
         const result = await response.json();
