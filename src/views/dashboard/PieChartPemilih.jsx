@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Card, CardContent } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from 'recharts';
+import Grid from '@mui/material/Grid';
+import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 const PieChartPemilih = () => {
   const token = localStorage.getItem('token');
@@ -48,10 +48,9 @@ const PieChartPemilih = () => {
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
-
     <Grid container spacing={2}>
       {desaData.map((desaItem, index) => (
-        <Grid size={{ xs: 2, sm: 4, md: 4, lg: 3 }} key={index}>
+        <Grid item xs={12} sm={6} md={3} lg={3} key={index}>
           <Card>
             <CardContent>
               <Typography variant="h6" component="div" gutterBottom>
@@ -59,7 +58,6 @@ const PieChartPemilih = () => {
               </Typography>
               <ResponsiveContainer width="100%" height={200}>
                 <PieChart>
-
                   <Pie
                     data={desaItem.data}
                     dataKey="count"
@@ -74,8 +72,8 @@ const PieChartPemilih = () => {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-
-                  <Tooltip formatter={(value, name) => [`${name} : ${value}`, 'TPS']} />
+                  <Tooltip formatter={(value, name) => [`${name}: ${value}`, 'TPS']} />
+                  <Legend verticalAlign="bottom" align="center" />
                 </PieChart>
               </ResponsiveContainer>
             </CardContent>

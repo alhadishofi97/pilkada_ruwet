@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup'
 import {
   Grid,
   Stack,
@@ -19,8 +21,8 @@ import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // Mocking the login API response for this example
-const loginApiUrl = 'http://192.168.18.168:8000/api/admin/login'; // Update API URL untuk admin
-
+const loginApiUrl = import.meta.env.VITE_APP_API_URL + '/api/admin/login'; // Update API URL untuk admin
+console.log('loginApiUrl', loginApiUrl)
 
 
 export const Login = () => {
@@ -30,40 +32,53 @@ export const Login = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      navigate('/dashboard/default',{replace:true});  // Adjust the route as needed
+    if (localStorage.getItem('IS_LOGIN')) {
+      navigate('/', { replace: true });  // Adjust the route as needed
     }
-  },[])  
+  }, [])
 
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(null);
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: ''
+    },
+    validationSchema: Yup.object({
+      username: Yup.string().required('required!'),
+      password: Yup.string().min(4, 'minimal 4 karakter').required('required!')
+    }),
+    onSubmit: async (values) => {
+      const loginData = { email: values.username, password: values.password }; // Change username to email
 
-    const loginData = { email: username, password }; // Change username to email
+      localStorage.setItem('IS_LOGIN', 1);
 
-    try {
-      const response = await fetch(loginApiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(loginData),
-        withCredentials: true,
-      });
+      navigate(0);
 
-      const data = await response.json();
+      try {
+        const response = await fetch(loginApiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginData),
+          withCredentials: true,
+        });
 
-      if (response.ok && data.access_token) { // Check for access_token
-        localStorage.setItem('token', data.access_token); // Store access_token
-        localStorage.setItem('user', loginData.email); // Store email instead of username
-        // Tambahkan penyimpanan data tambahan jika diperlukan untuk role admin
-        navigate(0);  // Adjust the route as needed
-      } else {
-        setError(data.message || 'Login failed, please try again.');
+        const data = await response.json();
+
+        if (response.ok && data.access_token) { // Check for access_token
+          localStorage.setItem('token', data.access_token); // Store access_token
+          localStorage.setItem('user', loginData.email); // Store email instead of username
+          // Tambahkan penyimpanan data tambahan jika diperlukan untuk role admin
+          navigate(0);  // Adjust the route as needed
+        } else {
+          setError(data.message || 'Login failed, please try again.');
+        }
+      } catch (error) {
+        setError('An error occurred while logging in.');
       }
-    } catch (error) {
-      setError('An error occurred while logging in.');
     }
-  };
+  })
+
+
 
   return (
     <AuthWrapper1>
@@ -75,7 +90,7 @@ export const Login = () => {
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
                     <Link to="#" aria-label="logo">
-                      <Logo />
+                      {/* <Logo /> */}
                     </Link>
                   </Grid>
                   <Grid item xs={12}>
@@ -83,34 +98,39 @@ export const Login = () => {
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography color="secondary.main" gutterBottom variant={downMD ? 'h3' : 'h2'}>
-                            Hi, Welcome Back
+                            Hi, Selamat Datang
                           </Typography>
                           <Typography variant="caption" fontSize="16px" textAlign={{ xs: 'center', md: 'inherit' }}>
-                            Enter your credentials to continue
+                            Masukan username dan password anda
                           </Typography>
                         </Stack>
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid item xs={12}>
-                    <form onSubmit={handleLogin}>
+                    <form onSubmit={formik.handleSubmit}>
                       <Stack spacing={2}>
                         <TextField
                           label="Username"
                           variant="outlined"
+                          name='username'
                           fullWidth
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
+                          value={formik.values.username}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.username && formik.errors.username ? <div>{formik.errors.username}</div> : null}
                         <TextField
                           label="Password"
+                          name='password'
                           type="password"
                           variant="outlined"
                           fullWidth
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
-                        {error && <Alert severity="error">{error}</Alert>}
+                        {formik.touched.password && formik.errors.password ? <div>{formik.errors.password}</div> : null}
                         <Button
                           type="submit"
                           variant="contained"

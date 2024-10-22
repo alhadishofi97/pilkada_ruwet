@@ -11,6 +11,7 @@ import LogoSection from '../LogoSection';
 import SearchSection from './SearchSection';
 import NotificationSection from './NotificationSection';
 import ProfileSection from './ProfileSection';
+import Typography from '@mui/material/Typography';
 
 // assets
 import { IconMenu2 } from '@tabler/icons-react';
@@ -34,6 +35,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
       >
         <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
           <LogoSection />
+          {/* <Typography variant="h3" component="h3">KPU</Typography> */}
         </Box>
         <ButtonBase sx={{ borderRadius: '8px', overflow: 'hidden' }}>
           <Avatar
@@ -58,7 +60,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
       </Box>
 
       {/* header search */}
-      <SearchSection />
+      {/* <SearchSection /> */}
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
 

@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import AuthMiddleware from './AuthMiddleware';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
@@ -28,14 +29,14 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardDefault />
+      element: (<AuthMiddleware><DashboardDefault /></AuthMiddleware>)
     },
     {
       path: 'dashboard',
       children: [
         {
           path: 'default',
-          element: <DashboardDefault />
+          element: (<AuthMiddleware><DashboardDefault /></AuthMiddleware>)
         }
       ]
     },
@@ -44,7 +45,7 @@ const MainRoutes = {
       children: [
         {
           path: 'util-group',
-          element: <UtilsGroup />
+          element: (<AuthMiddleware><UtilsGroup /></AuthMiddleware>)
         }
       ]
     },
@@ -53,7 +54,7 @@ const MainRoutes = {
       children: [
         {
           path: 'util-user',
-          element: <UtilsColor />
+          element: (<AuthMiddleware><UtilsColor /></AuthMiddleware>)
         }
       ]
     },
@@ -62,7 +63,7 @@ const MainRoutes = {
       children: [
         {
           path: 'util-customer',
-          element: <UtilsShadow />
+          element: (<AuthMiddleware><UtilsShadow /></AuthMiddleware>)
         }
       ]
     },
@@ -71,7 +72,7 @@ const MainRoutes = {
       children: [
         {
           path: 'util-barang',
-          element: <UtilsTablerIcons />
+          element: (<AuthMiddleware><UtilsTablerIcons /></AuthMiddleware>)
         }
       ]
     },
@@ -80,31 +81,31 @@ const MainRoutes = {
       children: [
         {
           path: 'util-supplier',
-          element: <UtilsSupplier />
+          element: (<AuthMiddleware><UtilsSupplier /></AuthMiddleware>)
         }
       ]
     },
     {
       path: 'utils',
       children: [
-      {
-        path: 'util-manageSupplier',
-        element: <UtilsManageSupplier />
-      }
+        {
+          path: 'util-manageSupplier',
+          element: (<AuthMiddleware><UtilsManageSupplier /></AuthMiddleware>)
+        }
       ]
     },
     {
       path: 'utils',
       children: [
-      {
-        path: 'util-pembelianStock',
-        element: <UtilsPembelianStock />
-      }
+        {
+          path: 'util-pembelianStock',
+          element: (<AuthMiddleware><UtilsPembelianStock /></AuthMiddleware>)
+        }
       ]
     },
     {
       path: 'sample-page',
-      element: <SamplePage />
+      element: (<AuthMiddleware><SamplePage /></AuthMiddleware>)
     }
   ]
 };
