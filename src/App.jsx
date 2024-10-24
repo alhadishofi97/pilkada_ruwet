@@ -5,13 +5,15 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
 // routing
-import router from 'routes';
+import router from '../src/routes/';
 
 // defaultTheme
 import themes from 'themes';
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
+
+
 
 // ==============================|| APP ||============================== //
 

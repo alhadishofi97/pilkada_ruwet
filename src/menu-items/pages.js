@@ -25,7 +25,7 @@ const pages = {
           id: 'login3',
           title: 'Login',
           type: 'item',
-          url: '/pages/login',
+          url: '/login',
           target: true
         },
         {

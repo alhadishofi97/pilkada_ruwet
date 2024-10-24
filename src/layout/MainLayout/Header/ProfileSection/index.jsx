@@ -57,7 +57,7 @@ const ProfileSection = () => {
     console.log('sessionStorage', localStorage);
     localStorage.clear();
     console.log('sessionStorage', localStorage);
-    navigate('/pages/login');
+    navigate('/login');
 
   };
 

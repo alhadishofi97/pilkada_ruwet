@@ -20,9 +20,12 @@ import AuthCardWrapper from '../AuthCardWrapper';
 import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 import axios from 'axios';
+import CryptoJS from 'crypto-js';
+
 
 // Mocking the login API response for this example
 const BASE_URL = import.meta.env.VITE_APP_API_URL; // Update API URL untuk admin
+const ENCRYPT_KEY = import.meta.env.VITE_APP_ENCRYPT_KEY; // Update API URL untuk admin
 
 
 export const Login = () => {
@@ -50,8 +53,8 @@ export const Login = () => {
     onSubmit: async (values) => {
       const loginData = { email: values.username, password: values.password }; // Change username to email
 
-
       let data = JSON.stringify(loginData);
+      const ciphertext = CryptoJS.AES.encrypt(data, ENCRYPT_KEY).toString();
 
       let config = {
         method: 'post',
@@ -60,7 +63,7 @@ export const Login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        data: data
+        data: { data: ciphertext }
       };
 
       axios.request(config)

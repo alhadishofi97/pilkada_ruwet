@@ -6,7 +6,7 @@ export default function AuthMiddleware({ children }) {
 
     useEffect(() => {
         if (!localStorage.getItem('IS_LOGIN')) {
-            navigate('/pages/login');
+            navigate('/login');
         }
     })
     return children;
